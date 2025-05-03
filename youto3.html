@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YSJF - 优化导航栏</title>
+    <style>
+        :root {
+            --primary-color: #ff0000;
+            --dark-bg: #0f0f0f;
+            --dark-surface: #202020;
+            --dark-text: #f1f1f1;
+            --dark-hover: #303030;
+            --light-bg: #ffffff;
+            --light-surface: #f9f9f9;
+            --light-text: #030303;
+            --light-hover: #e5e5e5;
+            --transition-speed: 0.3s;
+            --sidebar-width: 240px;
+            --sidebar-collapsed-width: 72px;
+            --header-height: 56px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+            overscroll-behavior-y: contain;
+        }
+
+        body.light-theme {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            height: var(--header-height);
+            background-color: var(--dark-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-hover);
+            transition: all var(--transition-speed) ease;
+        }
+
+        body.light-theme header {
+            background-color: var(--light-bg);
+            border-bottom: 1px solid var(--light-hover);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+        }
+
+        .theme-toggle {
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--dark-hover);
+        }
+
+        body.light-theme .theme-toggle:hover {
+            background-color: var(--light-hover);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-toggle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .theme-toggle.rotate img {
+            transform: rotate(360deg);
+        }
+
+        .user-controls {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            position: relative;
+        }
+
+        .control-icon {
+            padding: 8px;
+            margin-left: 4px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+        }
+
+        .control-icon:hover {
+            background-color: var(--dark-hover);
+            transform: scale(1.1);
+        }
+
+        body.light-theme .control-icon:hover {
+            background-color: var(--light-hover);
+        }
+
+        .control-icon:active {
+            transform: scale(0.95);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 48px;
+            right: 8px;
+            background-color: var(--dark-surface);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            min-width: 160px;
+            z-index: 1100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+
+        body.light-theme .dropdown-menu {
+            background-color: var(--light-surface);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--dark-hover);
+        }
+
+        body.light-theme .dropdown-item:hover {
+            background-color: var(--light-hover);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .user-avatar:active {
+            transform: scale(0.95);
+        }
+
+        .main-content {
+            display: flex;
+            margin-top: var(--header-height);
+            transition: margin-left var(--transition-speed) ease;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            padding: 12px 0;
+            background-color: var(--dark-bg);
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            overflow-y: auto;
+            z-index: 900;
+            transition: width var(--transition-speed) ease, transform var(--transition-speed) ease;
+            transform: translateX(0);
+            will-change: width, transform;
+            -webkit-overflow-scrolling: touch;
+            transform: translateZ(0);
+        }
+
+        body.light-theme .sidebar {
+            background-color: var(--light-bg);
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+            overflow-x: hidden;
+        }
+
+        .sidebar.collapsed .sidebar-item-text,
+        .sidebar.collapsed .sidebar-section-title {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar-section {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--dark-hover);
+            transition: border-color var(--transition-speed) ease;
+        }
+
+        body.light-theme .sidebar-section {
+            border-bottom: 1px solid var(--light-hover);
+        }
+
+        .sidebar-section-title {
+            padding: 8px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark-text);
+            opacity: 0.7;
+            transition: all var(--transition-speed) ease;
+        }
+
+        body.light-theme .sidebar-section-title {
+            color: var(--light-text);
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0 12px 0 24px;
+            height: 40px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
+            position: relative;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--dark-hover);
+        }
+
+        body.light-theme .sidebar-item:hover {
+            background-color: var(--light-hover);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--dark-hover);
+            font-weight: bold;
+        }
+
+        body.light-theme .sidebar-item.active {
+            background-color: var(--light-hover);
+        }
+
+        .sidebar-item-icon {
+            min-width: 24px;
+            margin-right: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: margin var(--transition-speed) ease;
+        }
+
+        .sidebar.collapsed .sidebar-item-icon {
+            margin-right: 0;
+        }
+
+        .sidebar-item-text {
+            font-size: 14px;
+            white-space: nowrap;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        .sidebar-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: transparent;
+            transition: background-color 0.2s ease;
+            pointer-events: none;
+        }
+
+        .sidebar-item:active::after {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-theme .sidebar-item:active::after {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition-speed) ease;
+            will-change: margin-left;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        /* Enhanced text visibility in dark mode with frosted glass effect */
+        .card-content {
+            padding: 12px;
+            position: relative;
+        }
+
+        body:not(.light-theme) .card-content {
+            background: rgba(32, 32, 32, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0 0 8px 8px;
+        }
+
+        body:not(.light-theme) .card-title,
+        body:not(.light-theme) .card-meta {
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (min-width: 769px) {
+            .content-grid {
+                perspective: 1000px;
+                transform-style: preserve-3d;
+            }
+            
+            .content-card {
+                transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+                position: relative;
+                z-index: 1;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+                will-change: transform;
+            }
+            
+            .sidebar:not(.collapsed) ~ .content .content-card {
+                transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), box-shadow 0.4s ease;
+            }
+            
+            .sidebar:not(.collapsed) ~ .content .content-card:nth-child(3n+1) {
+                transform: translateX(10px) translateY(5px);
+                z-index: 3;
+            }
+            
+            .sidebar:not(.collapsed) ~ .content .content-card:nth-child(3n+2) {
+                transform: translateX(5px) translateY(3px);
+                z-index: 2;
+            }
+            
+            .sidebar:not(.collapsed) ~ .content .content-card:nth-child(3n+3) {
+                transform: translateX(0) translateY(0);
+                z-index: 1;
+            }
+            
+            .sidebar:not(.collapsed) ~ .content .content-card:hover {
+                transform: translateY(-5px) !important;
+                z-index: 4 !important;
+            }
+        }
+
+        .sidebar.collapsed ~ .content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .content-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content-filters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-button {
+            padding: 8px 16px;
+            background-color: var(--dark-surface);
+            border: none;
+            border-radius: 20px;
+            color: var(--dark-text);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        body.light-theme .filter-button {
+            background-color: var(--light-surface);
+            color: var(--light-text);
+        }
+
+        .filter-button:hover {
+            background-color: var(--dark-hover);
+        }
+
+        body.light-theme .filter-button:hover {
+            background-color: var(--light-hover);
+        }
+
+        .filter-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .slider-container {
+            display: none;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            touch-action: pan-y;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            height: 160px;
+            width: 100%;
+            will-change: transform;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background-color: var(--primary-color);
+        }
+
+        .content-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .content-card {
+            background-color: var(--dark-surface);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        body.light-theme .content-card {
+            background-color: var(--light-surface);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            font-size: 14px;
+            color: #aaa;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        body.light-theme .card-meta {
+            color: #666;
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--dark-surface);
+            height: 60px;
+            z-index: 1000;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s ease-out;
+        }
+
+        body.light-theme .bottom-nav {
+            background-color: var(--light-surface);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-nav.hidden {
+            transform: translateY(100%);
+        }
+
+        .bottom-nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--dark-text);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 8px;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        body.light-theme .bottom-nav-item {
+            color: var(--light-text);
+        }
+
+        .bottom-nav-item:hover {
+            background-color: var(--dark-hover);
+        }
+
+        body.light-theme .bottom-nav-item:hover {
+            background-color: var(--light-hover);
+        }
+
+        .bottom-nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .bottom-nav-item svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 850;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        .overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                z-index: 950;
+                overflow-y: auto;
+            }
+
+            .sidebar.visible {
+                transform: translateX(0);
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 16px;
+                padding-top: calc(var(--header-height) + 16px);
+                padding-bottom: 80px;
+            }
+
+            .slider-container {
+                display: block;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .content-filters {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 200px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .sidebar-item {
+            animation: slideIn 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        .sidebar-item:nth-child(1) { animation-delay: 0.1s; }
+        .sidebar-item:nth-child(2) { animation-delay: 0.15s; }
+        .sidebar-item:nth-child(3) { animation-delay: 0.2s; }
+        .sidebar-item:nth-child(4) { animation-delay: 0.25s; }
+        .sidebar-item:nth-child(5) { animation-delay: 0.3s; }
+        .sidebar-item:nth-child(6) { animation-delay: 0.35s; }
+        .sidebar-item:nth-child(7) { animation-delay: 0.4s; }
+        .sidebar-item:nth-child(8) { animation-delay: 0.45s; }
+        .sidebar-item:nth-child(9) { animation-delay: 0.5s; }
+        .sidebar-item:nth-child(10) { animation-delay: 0.55s; }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <header>
+        <div class="logo-container">
+            <div class="theme-toggle" id="themeToggle">
+                <img src="https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png" alt="Theme toggle">
+            </div>
+            <img src="hv" alt="Logo" class="logo">
+        </div>
+        
+        <div class="user-controls">
+            <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/FmXo0ZgeSGcMnUbiaxJxZe4IbMO8uVpho2u4QYEWN3FibxkbrfWkEXFGNGmtyhouaCYsdY2jjrBibibXlQ1iaJgxKErfHF9vl6BxcHiaYBCiageneU/132" alt="User Avatar" class="user-avatar">
+        </div>
+    </header>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-item active">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">首页</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33c-.77-.32-1.2-.5-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86l-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">Shorts</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">订阅内容</div>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">探索</div>
+            <div class="sidebar-item">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M11 7l6 3.5-6 3.5V7zm7 13H4V6H3v15h15v-1zm3-2H6V3h15v15zM7 17h13V4H7v13z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">媒体库</div>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">个人</div>
+            <div class="sidebar-item">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M12 3.67c-4.58 0-8.33 3.75-8.33 8.33s3.75 8.33 8.33 8.33 8.33-3.75 8.33-8.33c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">您的视频</div>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">设置</div>
+            <div class="sidebar-item theme-toggle-item">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">设置</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-item-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                    </svg>
+                </div>
+                <div class="sidebar-item-text">报告问题</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="content-container">
+            <div class="slider-container" id="sliderContainer">
+                <div class="slider" id="slider">
+                    <div class="slide">
+                        <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 1">
+                    </div>
+                    <div class="slide">
+                        <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 2">
+                    </div>
+                    <div class="slide">
+                        <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 3">
+                    </div>
+                </div>
+                <div class="slider-dots">
+                    <div class="slider-dot active" data-index="0"></div>
+                    <div class="slider-dot" data-index="1"></div>
+                    <div class="slider-dot" data-index="2"></div>
+                </div>
+            </div>
+            
+            <div class="content-header">
+                <h1 class="content-title">推荐内容</h1>
+                <div class="content-filters">
+                    <button class="filter-button active">全部</button>
+                    <button class="filter-button">最新</button>
+                    <button class="filter-button">热门</button>
+                    <button class="filter-button">收藏</button>
+                </div>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 1" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">驯鹿部落全景展示</h3>
+                        <div class="card-meta">
+                            <span>YSJF</span>
+                            <span>1.2万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 2" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">野生动物摄影技巧分享</h3>
+                        <div class="card-meta">
+                            <span>自然摄影</span>
+                            <span>8千观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 3" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">北方森林探险日记 - 第一季合集</h3>
+                        <div class="card-meta">
+                            <span>探险家</span>
+                            <span>3.5万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 4" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">驯鹿文化与传统生活方式</h3>
+                        <div class="card-meta">
+                            <span>文化探索</span>
+                            <span>1.8万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 5" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">极地风光摄影大赛获奖作品展示</h3>
+                        <div class="card-meta">
+                            <span>摄影艺术</span>
+                            <span>5.6万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 6" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">野生动物保护现状与未来</h3>
+                        <div class="card-meta">
+                            <span>环保组织</span>
+                            <span>2.3万观看</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav" id="bottomNav">
+        <div class="bottom-nav-items">
+            <div class="bottom-nav-item active" data-section="home">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                </svg>
+                <span>首页</span>
+            </div>
+            <div class="bottom-nav-item" data-section="explore">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33c-.77-.32-1.2-.5-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86l-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path>
+                </svg>
+                <span>探索</span>
+            </div>
+            <div class="bottom-nav-item" data-section="subscriptions">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3.67c-4.58 0-8.33 3.75-8.33 8.33s3.75 8.33 8.33 8.33 8.33-3.75 8.33-8.33c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
+                </svg>
+                <span>订阅</span>
+            </div>
+            <div class="bottom-nav-item" data-section="menu">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+                </svg>
+                <span>菜单</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const body = document.body;
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const themeToggle = document.getElementById('themeToggle');
+        const bottomNav = document.getElementById('bottomNav');
+        const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const menuItems = document.querySelectorAll('.sidebar-item');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const slider = document.getElementById('slider');
+        const sliderDots = document.querySelectorAll('.slider-dot');
+        const settingsToggle = document.querySelector('.theme-toggle-item');
+
+        // Initialize theme and icons
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const themeIcons = {
+            light: 'https://www.ysjf.com/assets/ysjf@2x-DcH_D2DE.png',
+            dark: 'https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png'
+        };
+
+        if (currentTheme === 'light') {
+            body.classList.add('light-theme');
+            themeToggle.querySelector('img').src = themeIcons.light;
+        } else {
+            themeToggle.querySelector('img').src = themeIcons.dark;
+        }
+
+        let sidebarExpanded = true;
+        let isMouseOverSidebar = false;
+        let isMenuOpen = false;
+        let lastScrollPosition = 0;
+        let currentSlide = 0;
+        let slideInterval;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Theme toggle function
+        function toggleTheme(element) {
+            // 立即切换主题
+            body.classList.toggle('light-theme');
+            const theme = body.classList.contains('light-theme') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+            
+            // 更新图标
+            themeToggle.querySelector('img').src = themeIcons[theme];
+            
+            // 如果是头部切换按钮，执行旋转动画
+            if (element === themeToggle) {
+                themeToggle.classList.add('rotate');
+                setTimeout(() => {
+                    themeToggle.classList.remove('rotate');
+                }, 500);
+            }
+        }
+
+        // Theme toggle handlers
+        themeToggle.addEventListener('click', () => toggleTheme(themeToggle));
+        if (settingsToggle) {
+            settingsToggle.addEventListener('click', () => toggleTheme(settingsToggle));
+        }
+
+        // Slider functions
+        function initSlider() {
+            if (window.innerWidth > 768) return;
+            
+            slideInterval = setInterval(() => {
+                let nextSlide;
+                do {
+                    nextSlide = Math.floor(Math.random() * 3);
+                } while (nextSlide === currentSlide);
+                goToSlide(nextSlide);
+            }, 3000);
+            
+            sliderDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    goToSlide(parseInt(this.dataset.index));
+                    resetSlideInterval();
+                });
+            });
+            
+            slider.addEventListener('touchstart', handleTouchStart, { passive: true });
+            slider.addEventListener('touchmove', handleTouchMove, { passive: false });
+            slider.addEventListener('touchend', handleTouchEnd, { passive: true });
+        }
+        
+        function handleTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+            resetSlideInterval();
+            clearInterval(slideInterval);
+        }
+        
+        function handleTouchMove(e) {
+            touchEndX = e.touches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 10) {
+                e.preventDefault();
+                slider.style.transition = 'none';
+                slider.style.transform = `translateX(calc(-${currentSlide * 100}% - ${diff}px))`;
+            }
+        }
+        
+        function handleTouchEnd() {
+            slider.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            const threshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (diff > threshold) {
+                goToSlide((currentSlide + 1) % 3);
+            } else if (diff < -threshold) {
+                goToSlide((currentSlide - 1 + 3) % 3);
+            } else {
+                goToSlide(currentSlide);
+            }
+            
+            resetSlideInterval();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            sliderDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        function resetSlideInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                let nextSlide;
+                do {
+                    nextSlide = Math.floor(Math.random() * 3);
+                } while (nextSlide === currentSlide);
+                goToSlide(nextSlide);
+            }, 3000);
+        }
+
+        // Auto-collapse sidebar on desktop
+        window.addEventListener('load', () => {
+            if (window.innerWidth > 768) {
+                setTimeout(() => {
+                    if (!isMouseOverSidebar) {
+                        sidebar.classList.add('collapsed');
+                        sidebarExpanded = false;
+                    }
+                }, 2000);
+            }
+            
+            initSlider();
+        });
+
+        function checkScreenSize() {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('collapsed');
+                sidebar.classList.remove('visible');
+                overlay.classList.remove('visible');
+                sidebarExpanded = false;
+                isMenuOpen = false;
+            } else {
+                sidebar.classList.add('visible');
+                sidebarExpanded = true;
+            }
+        }
+
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+
+        // Sidebar hover for desktop
+        sidebar.addEventListener('mouseenter', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('collapsed');
+                sidebarExpanded = true;
+                isMouseOverSidebar = true;
+            }
+        });
+
+        sidebar.addEventListener('mouseleave', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.add('collapsed');
+                sidebarExpanded = false;
+                isMouseOverSidebar = false;
+            }
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('visible');
+            overlay.classList.remove('visible');
+            isMenuOpen = false;
+        });
+
+        // Sidebar and bottom nav interactions
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                if (!this.classList.contains('theme-toggle-item')) {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                }
+                if (window.innerWidth <= 768 && !this.classList.contains('theme-toggle-item')) {
+                    sidebar.classList.remove('visible');
+                    overlay.classList.remove('visible');
+                    isMenuOpen = false;
+                }
+            });
+        });
+
+        bottomNavItems.forEach(item => {
+            item.addEventListener('click', function() {
+                bottomNavItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                if (this.dataset.section === 'menu') {
+                    isMenuOpen = !isMenuOpen;
+                    if (isMenuOpen) {
+                        sidebar.classList.add('visible');
+                        overlay.classList.add('visible');
+                    } else {
+                        sidebar.classList.remove('visible');
+                        overlay.classList.remove('visible');
+                    }
+                    bottomNav.classList.remove('hidden');
+                } else {
+                    sidebar.classList.remove('visible');
+                    overlay.classList.remove('visible');
+                    isMenuOpen = false;
+                }
+            });
+        });
+
+        // Filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Scroll logic for bottom nav
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth > 768) return;
+            
+            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 50) {
+                bottomNav.classList.add('hidden');
+            } else {
+                bottomNav.classList.remove('hidden');
+            }
+            
+            lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
+        });
+
+        // Fix sidebar scrolling
+        sidebar.addEventListener('touchstart', function(e) {
+            if (this.scrollHeight > this.clientHeight) {
+                e.stopPropagation();
+            }
+        }, { passive: true });
+
+        sidebar.addEventListener('touchmove', function(e) {
+            if (this.scrollHeight > this.clientHeight) {
+                e.stopPropagation();
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
