@@ -5,24 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YSJF - 优化导航栏</title>
     <style>
-        /* 隐藏所有滚动条 */
-        ::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            height: 0;
-        }
-        html {
-            overflow: -moz-hidden-unscrollable;
-            overflow: hidden;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        body {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            overflow: hidden;
-        }
-
         :root {
             --primary-color: #ff0000;
             --dark-bg: #0f0f0f;
@@ -52,7 +34,6 @@
             color: var(--dark-text);
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
             overscroll-behavior-y: contain;
-            overflow: hidden;
         }
 
         body.light-theme {
@@ -218,7 +199,6 @@
             display: flex;
             margin-top: var(--header-height);
             transition: margin-left var(--transition-speed) ease;
-            overflow: hidden;
         }
 
         .sidebar {
@@ -236,12 +216,12 @@
             will-change: width, transform;
             -webkit-overflow-scrolling: touch;
             transform: translateZ(0);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
         }
 
         .sidebar::-webkit-scrollbar {
-            display: none;
+            display: none; /* Chrome, Safari and Opera */
         }
 
         body.light-theme .sidebar {
@@ -345,7 +325,6 @@
             transform: translateZ(0);
             backface-visibility: hidden;
             perspective: 1000px;
-            overflow: hidden;
         }
 
         /* Enhanced text visibility in dark mode with frosted glass effect */
@@ -406,7 +385,6 @@
         .content-container {
             width: 100%;
             max-width: 1200px;
-            overflow: hidden;
         }
 
         .content-header {
@@ -424,7 +402,6 @@
         .content-filters {
             display: flex;
             gap: 10px;
-            overflow: hidden;
         }
 
         .filter-button {
@@ -514,7 +491,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            overflow: hidden;
         }
 
         .content-card {
@@ -759,6 +735,7 @@
             <div class="theme-toggle" id="themeToggle">
                 <img src="https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png" alt="Theme toggle">
             </div>
+            <img src="hv" alt="Logo" class="logo">
         </div>
         
         <div class="user-controls">
@@ -810,13 +787,11 @@
             <div class="sidebar-section-title">个人</div>
             <div class="sidebar-item">
                 <div class="sidebar-item-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 18V5l12-2v13"/>
-                        <circle cx="6" cy="18" r="3"/>
-                        <circle cx="18" cy="16" r="3"/>
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M12 3.67c-4.58 0-8.33 3.75-8.33 8.33s3.75 8.33 8.33 8.33 8.33-3.75 8.33-8.33c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
                     </svg>
                 </div>
-                <div class="sidebar-item-text">我的音乐</div>
+                <div class="sidebar-item-text">您的视频</div>
             </div>
         </div>
         
@@ -832,11 +807,11 @@
             </div>
             <div class="sidebar-item">
                 <div class="sidebar-item-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
                     </svg>
                 </div>
-                <div class="sidebar-item-text">联系我</div>
+                <div class="sidebar-item-text">报告问题</div>
             </div>
         </div>
     </div>
@@ -952,7 +927,7 @@
             </div>
             <div class="bottom-nav-item" data-section="subscriptions">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"></path>
+                    <path d="M12 3.67c-4.58 0-8.33 3.75-8.33 8.33s3.75 8.33 8.33 8.33 8.33-3.75 8.33-8.33c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
                 </svg>
                 <span>订阅</span>
             </div>
@@ -979,29 +954,19 @@
         const slider = document.getElementById('slider');
         const sliderDots = document.querySelectorAll('.slider-dot');
 
-        // 根据时间设置主题
-        function setThemeByTime() {
-            const now = new Date();
-            const hours = now.getHours();
-            
-            // 6:00-23:00为白天模式，其他时间为夜间模式
-            if (hours >= 6 && hours < 23) {
-                body.classList.add('light-theme');
-                localStorage.setItem('theme', 'light');
-                themeToggle.querySelector('img').src = 'https://www.ysjf.com/assets/ysjf@2x-DcH_D2DE.png';
-            } else {
-                body.classList.remove('light-theme');
-                localStorage.setItem('theme', 'dark');
-                themeToggle.querySelector('img').src = 'https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png';
-            }
-        }
-
         // Initialize theme and icons
-        setThemeByTime();
+        const currentTheme = localStorage.getItem('theme') || 'dark';
         const themeIcons = {
             light: 'https://www.ysjf.com/assets/ysjf@2x-DcH_D2DE.png',
             dark: 'https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png'
         };
+
+        if (currentTheme === 'light') {
+            body.classList.add('light-theme');
+            themeToggle.querySelector('img').src = themeIcons.light;
+        } else {
+            themeToggle.querySelector('img').src = themeIcons.dark;
+        }
 
         let sidebarExpanded = true;
         let isMouseOverSidebar = false;
@@ -1187,18 +1152,18 @@
                     if (isMenuOpen) {
                         sidebar.classList.add('visible');
                         overlay.classList.add('visible');
-                        document.body.style.overflow = 'hidden';
+                        document.body.style.overflow = 'hidden'; // 禁止滚动
                     } else {
                         sidebar.classList.remove('visible');
                         overlay.classList.remove('visible');
-                        document.body.style.overflow = '';
+                        document.body.style.overflow = ''; // 恢复滚动
                     }
                     bottomNav.classList.remove('hidden');
                 } else {
                     sidebar.classList.remove('visible');
                     overlay.classList.remove('visible');
                     isMenuOpen = false;
-                    document.body.style.overflow = '';
+                    document.body.style.overflow = ''; // 恢复滚动
                 }
             });
         });
@@ -1237,4 +1202,4 @@
         document.addEventListener('touchmove', preventDefault, { passive: false });
     </script>
 </body>
-</html>   
+</html>
