@@ -216,12 +216,12 @@
             will-change: width, transform;
             -webkit-overflow-scrolling: touch;
             transform: translateZ(0);
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .sidebar::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            display: none;
         }
 
         body.light-theme .sidebar {
@@ -327,7 +327,6 @@
             perspective: 1000px;
         }
 
-        /* Enhanced text visibility in dark mode with frosted glass effect */
         .card-content {
             padding: 12px;
             position: relative;
@@ -493,13 +492,6 @@
             gap: 20px;
         }
 
-        .content-card {
-            background-color: var(--dark-surface);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, opacity var(--transition-speed) ease;
-        }
-
         body.light-theme .content-card {
             background-color: var(--light-surface);
         }
@@ -621,6 +613,22 @@
             pointer-events: all;
         }
 
+        .contact-content {
+            display: none;
+        }
+
+        .original-content {
+            display: block;
+        }
+
+        .show-contact .original-content {
+            display: none;
+        }
+
+        .show-contact .contact-content {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -666,7 +674,6 @@
                 padding-bottom: 8px;
             }
 
-            /* 修改为两列布局 */
             .content-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -698,23 +705,6 @@
             .card-meta {
                 font-size: 12px;
             }
-        }
-
-        /* Contact content styles */
-        .contact-content {
-            display: none;
-        }
-
-        .original-content {
-            display: block;
-        }
-
-        .show-contact .original-content {
-            display: none;
-        }
-
-        .show-contact .contact-content {
-            display: block;
         }
 
         @keyframes fadeIn {
@@ -756,12 +746,11 @@
         </div>
         
         <div class="user-controls">
-            <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/FmXo0ZgeSGcMnUbiaxJxZe4IbMO8uVpho2u4QYEWN3FibxkbrfWkEXFGNGmtyhouaCYsdY2jjrBibibXlQ1iaJgxKErfHF9vl6BxcHiaYBCiageneU/132" alt="User Avatar" class="user-avatar">
+            <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/FmXo0ZgeSGcMnUbiaxJxZe4IbMO8uVpho2u4QYEWN3FibxkbrfWkEXFGNGmtyhouaCYsdY2jjrBibibXlQ1iaJgxKErfHF9vl6BxcHiaYBCiageneU/132" alt="User Avatar" class="user-avatar" id="userAvatar">
         </div>
     </header>
     
     <div class="sidebar" id="sidebar">
-        <!-- Original Content -->
         <div class="original-content">
             <div class="sidebar-section">
                 <div class="sidebar-item active">
@@ -818,7 +807,7 @@
                 <div class="sidebar-item theme-toggle-item" id="sidebarThemeToggle">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.76 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">设置</div>
@@ -834,11 +823,9 @@
             </div>
         </div>
 
-        <!-- Contact Content -->
         <div class="contact-content">
             <div class="sidebar-section">
                 <div class="sidebar-section-title">通讯</div>
-                <!-- 微信 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg t="1746266427548" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="47060" width="28" height="28">
@@ -848,7 +835,6 @@
                     </div>
                     <div class="sidebar-item-text">微信：yaliuz</div>
                 </div>
-                <!-- 邮箱 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -858,7 +844,6 @@
                     </div>
                     <div class="sidebar-item-text">邮箱：yaliuz@qq.com</div>
                 </div>
-                <!-- QQ -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -868,7 +853,6 @@
                     </div>
                     <div class="sidebar-item-text">QQ：42626139</div>
                 </div>
-                <!-- 二维码 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg t="1746266022476" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="39061" width="24" height="24">
@@ -880,16 +864,14 @@
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-title">其他</div>
-                <!-- 礼物 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                            <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 _timestamps = [] 7z"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">礼物</div>
                 </div>
-                <!-- 传统电话 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -899,7 +881,6 @@
                     </div>
                     <div class="sidebar-item-text">电话：1321*******</div>
                 </div>
-                <!-- 登入后台 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1015,6 +996,66 @@
                         </div>
                     </div>
                 </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 7" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">北极生态系统研究</h3>
+                        <div class="card-meta">
+                            <span>科学研究</span>
+                            <span>1.5万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 8" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">冰川徒步探险指南</h3>
+                        <div class="card-meta">
+                            <span>户外运动</span>
+                            <span>2.8万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 9" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">极光摄影技巧</h3>
+                        <div class="card-meta">
+                            <span>摄影教程</span>
+                            <span>4.2万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 10" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">传统狩猎文化</h3>
+                        <div class="card-meta">
+                            <span>人类学</span>
+                            <span>1.1万观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 11" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">寒带植物生态</h3>
+                        <div class="card-meta">
+                            <span>植物学</span>
+                            <span>9000观看</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 12" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">极地生存技巧</h3>
+                        <div class="card-meta">
+                            <span>生存训练</span>
+                            <span>3.1万观看</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1034,8 +1075,8 @@
                 <span>探索</span>
             </div>
             <div class="bottom-nav-item" data-section="subscriptions">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 3.67c-4.58 0-8.33 3.75-8.33 8.33s3.75 8.33 8.33 8.33 8.33-3.75 8.33-8.33c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"></path>
                 </svg>
                 <span>订阅</span>
             </div>
@@ -1054,6 +1095,7 @@
         const overlay = document.getElementById('overlay');
         const themeToggle = document.getElementById('themeToggle');
         const sidebarThemeToggle = document.getElementById('sidebarThemeToggle');
+        const userAvatar = document.getElementById('userAvatar');
         const contactToggle = document.querySelector('.contact-toggle');
         const backToMain = document.querySelector('.back-to-main');
         const bottomNav = document.getElementById('bottomNav');
@@ -1063,6 +1105,7 @@
         const sliderContainer = document.getElementById('sliderContainer');
         const slider = document.getElementById('slider');
         const sliderDots = document.querySelectorAll('.slider-dot');
+        const contentGrid = document.querySelector('.content-grid');
 
         // Initialize theme and icons
         const currentTheme = localStorage.getItem('theme') || 'dark';
@@ -1089,15 +1132,10 @@
 
         // Theme toggle function
         function toggleTheme(element) {
-            // 立即切换主题
             body.classList.toggle('light-theme');
             const theme = body.classList.contains('light-theme') ? 'light' : 'dark';
             localStorage.setItem('theme', theme);
-            
-            // 更新图标
             themeToggle.querySelector('img').src = themeIcons[theme];
-            
-            // 执行旋转动画
             element.classList.add('rotate');
             setTimeout(() => {
                 element.classList.remove('rotate');
@@ -1107,18 +1145,45 @@
         // Contact view toggle function
         function toggleContactView() {
             sidebar.classList.toggle('show-contact');
-            // Ensure sidebar is expanded when showing contact view
             if (sidebar.classList.contains('show-contact')) {
                 sidebar.classList.remove('collapsed');
                 sidebarExpanded = true;
+                if (window.innerWidth > 768) {
+                    isMouseOverSidebar = true;
+                }
+            } else if (window.innerWidth > 768) {
+                setTimeout(() => {
+                    if (!isMouseOverSidebar) {
+                        sidebar.classList.add('collapsed');
+                        sidebarExpanded = false;
+                    }
+                }, 200);
+            }
+        }
+
+        // Reset contact view
+        function resetContactView() {
+            if (sidebar.classList.contains('show-contact')) {
+                sidebar.classList.remove('show-contact');
+                if (window.innerWidth > 768) {
+                    setTimeout(() => {
+                        if (!isMouseOverSidebar) {
+                            sidebar.classList.add('collapsed');
+                            sidebarExpanded = false;
+                        }
+                    }, 200);
+                }
             }
         }
 
         // Theme toggle handlers
         themeToggle.addEventListener('click', () => toggleTheme(themeToggle));
         sidebarThemeToggle.addEventListener('click', () => toggleTheme(themeToggle));
+        
+        // Contact toggle handlers
         contactToggle.addEventListener('click', toggleContactView);
         backToMain.addEventListener('click', toggleContactView);
+        userAvatar.addEventListener('click', toggleContactView);
 
         // Slider functions
         function initSlider() {
@@ -1179,7 +1244,6 @@
         function goToSlide(index) {
             currentSlide = index;
             slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
             sliderDots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
             });
@@ -1194,6 +1258,29 @@
                 } while (nextSlide === currentSlide);
                 goToSlide(nextSlide);
             }, 3000);
+        }
+
+        // Mobile scrolling functions
+        function scrollToSection(section) {
+            if (window.innerWidth > 768) return;
+            
+            const cards = document.querySelectorAll('.content-card');
+            let scrollPosition = 0;
+            
+            if (section === 'home') {
+                scrollPosition = 0;
+            } else if (section === 'explore') {
+                // Scroll to the 5th card (start of second row)
+                scrollPosition = cards[4].offsetTop - 70;
+            } else if (section === 'subscriptions') {
+                // Scroll to the 9th card (start of third row)
+                scrollPosition = cards[8].offsetTop - 70;
+            }
+            
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'smooth'
+            });
         }
 
         // Auto-collapse sidebar on desktop
@@ -1217,6 +1304,7 @@
                 overlay.classList.remove('visible');
                 sidebarExpanded = false;
                 isMenuOpen = false;
+                resetContactView();
             } else {
                 sidebar.classList.add('visible');
                 sidebarExpanded = true;
@@ -1236,10 +1324,11 @@
         });
 
         sidebar.addEventListener('mouseleave', () => {
-            if (window.innerWidth > 768 && !sidebar.classList.contains('show-contact')) {
+            if (window.innerWidth > 768) {
                 sidebar.classList.add('collapsed');
                 sidebarExpanded = false;
                 isMouseOverSidebar = false;
+                resetContactView();
             }
         });
 
@@ -1247,6 +1336,7 @@
             sidebar.classList.remove('visible');
             overlay.classList.remove('visible');
             isMenuOpen = false;
+            resetContactView();
         });
 
         // Sidebar and bottom nav interactions
@@ -1264,6 +1354,7 @@
                     sidebar.classList.remove('visible');
                     overlay.classList.remove('visible');
                     isMenuOpen = false;
+                    resetContactView();
                 }
             });
         });
@@ -1278,18 +1369,21 @@
                     if (isMenuOpen) {
                         sidebar.classList.add('visible');
                         overlay.classList.add('visible');
-                        document.body.style.overflow = 'hidden'; // 禁止滚动
+                        document.body.style.overflow = 'hidden';
                     } else {
                         sidebar.classList.remove('visible');
                         overlay.classList.remove('visible');
-                        document.body.style.overflow = ''; // 恢复滚动
+                        document.body.style.overflow = '';
+                        resetContactView();
                     }
                     bottomNav.classList.remove('hidden');
                 } else {
                     sidebar.classList.remove('visible');
                     overlay.classList.remove('visible');
                     isMenuOpen = false;
-                    document.body.style.overflow = ''; // 恢复滚动
+                    document.body.style.overflow = '';
+                    resetContactView();
+                    scrollToSection(this.dataset.section);
                 }
             });
         });
@@ -1324,7 +1418,6 @@
             }
         }
 
-        // Add touch event listeners to prevent scrolling when sidebar is open
         document.addEventListener('touchmove', preventDefault, { passive: false });
     </script>
 </body>
