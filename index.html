@@ -25,19 +25,19 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Roboto', system-ui, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--dark-bg);
+            background: var(--dark-bg);
             color: var(--dark-text);
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
             overscroll-behavior-y: contain;
         }
 
         body.light-theme {
-            background-color: var(--light-bg);
+            background: var(--light-bg);
             color: var(--light-text);
         }
 
@@ -47,7 +47,7 @@
             align-items: center;
             padding: 0 16px;
             height: var(--header-height);
-            background-color: var(--dark-bg);
+            background: var(--dark-bg);
             position: fixed;
             top: 0;
             left: 0;
@@ -58,7 +58,7 @@
         }
 
         body.light-theme header {
-            background-color: var(--light-bg);
+            background: var(--light-bg);
             border-bottom: 1px solid var(--light-hover);
         }
 
@@ -70,7 +70,6 @@
 
         .logo {
             height: 30px;
-            width: auto;
         }
 
         .theme-toggle {
@@ -83,15 +82,14 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            overflow: hidden;
         }
 
         .theme-toggle:hover {
-            background-color: var(--dark-hover);
+            background: var(--dark-hover);
         }
 
         body.light-theme .theme-toggle:hover {
-            background-color: var(--light-hover);
+            background: var(--light-hover);
         }
 
         .theme-toggle:active {
@@ -101,7 +99,6 @@
         .theme-toggle img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
             transition: transform 0.5s ease;
         }
 
@@ -112,70 +109,6 @@
         .user-controls {
             display: flex;
             align-items: center;
-            min-width: 0;
-            position: relative;
-        }
-
-        .control-icon {
-            padding: 8px;
-            margin-left: 4px;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: background-color var(--transition-speed) ease, transform 0.2s ease;
-        }
-
-        .control-icon:hover {
-            background-color: var(--dark-hover);
-            transform: scale(1.1);
-        }
-
-        body.light-theme .control-icon:hover {
-            background-color: var(--light-hover);
-        }
-
-        .control-icon:active {
-            transform: scale(0.95);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 48px;
-            right: 8px;
-            background-color: var(--dark-surface);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            min-width: 160px;
-            z-index: 1100;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
-        }
-
-        body.light-theme .dropdown-menu {
-            background-color: var(--light-surface);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            padding: 12px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color var(--transition-speed) ease;
-        }
-
-        .dropdown-item:hover {
-            background-color: var(--dark-hover);
-        }
-
-        body.light-theme .dropdown-item:hover {
-            background-color: var(--light-hover);
         }
 
         .user-avatar {
@@ -195,16 +128,10 @@
             transform: scale(0.95);
         }
 
-        .main-content {
-            display: flex;
-            margin-top: var(--header-height);
-            transition: margin-left var(--transition-speed) ease;
-        }
-
         .sidebar {
             width: var(--sidebar-width);
             padding: 12px 0;
-            background-color: var(--dark-bg);
+            background: var(--dark-bg);
             height: calc(100vh - var(--header-height));
             position: fixed;
             top: var(--header-height);
@@ -212,20 +139,16 @@
             overflow-y: auto;
             z-index: 900;
             transition: width var(--transition-speed) ease, transform var(--transition-speed) ease;
-            transform: translateX(0);
-            will-change: width, transform;
-            -webkit-overflow-scrolling: touch;
-            transform: translateZ(0);
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .sidebar::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            display: none;
         }
 
         body.light-theme .sidebar {
-            background-color: var(--light-bg);
+            background: var(--light-bg);
         }
 
         .sidebar.collapsed {
@@ -239,15 +162,12 @@
             width: 0;
             height: 0;
             overflow: hidden;
-            margin: 0;
-            padding: 0;
             transition: opacity 0.2s ease;
         }
 
         .sidebar-section {
             padding: 8px 0;
             border-bottom: 1px solid var(--dark-hover);
-            transition: border-color var(--transition-speed) ease;
         }
 
         body.light-theme .sidebar-section {
@@ -258,13 +178,8 @@
             padding: 8px 24px;
             font-size: 16px;
             font-weight: 500;
-            color: var(--dark-text);
             opacity: 0.7;
             transition: all var(--transition-speed) ease;
-        }
-
-        body.light-theme .sidebar-section-title {
-            color: var(--light-text);
         }
 
         .sidebar-item {
@@ -273,28 +188,27 @@
             padding: 0 12px 0 24px;
             height: 40px;
             cursor: pointer;
-            overflow: hidden;
             transition: all var(--transition-speed) ease;
-            position: relative;
-            -webkit-user-select: none;
             user-select: none;
+            animation: slideIn 0.3s ease forwards;
+            opacity: 0;
         }
 
         .sidebar-item:hover {
-            background-color: var(--dark-hover);
+            background: var(--dark-hover);
         }
 
         body.light-theme .sidebar-item:hover {
-            background-color: var(--light-hover);
+            background: var(--light-hover);
         }
 
         .sidebar-item.active {
-            background-color: var(--dark-hover);
+            background: var(--dark-hover);
             font-weight: bold;
         }
 
         body.light-theme .sidebar-item.active {
-            background-color: var(--light-hover);
+            background: var(--light-hover);
         }
 
         .sidebar-item-icon {
@@ -320,71 +234,16 @@
             flex-grow: 1;
             padding: 20px;
             margin-left: var(--sidebar-width);
-            transition: margin-left var(--transition-speed) ease, transform var(--transition-speed) ease;
-            will-change: margin-left, transform;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
-
-        /* Enhanced text visibility in dark mode with frosted glass effect */
-        .card-content {
-            padding: 12px;
-            position: relative;
-        }
-
-        body:not(.light-theme) .card-content {
-            background: rgba(32, 32, 32, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 0 0 8px 8px;
-        }
-
-        body:not(.light-theme) .card-title,
-        body:not(.light-theme) .card-meta {
-            color: #ffffff;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (min-width: 769px) {
-            .content-grid {
-                perspective: 1000px;
-                transform-style: preserve-3d;
-            }
-            
-            .content-card {
-                transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, filter var(--transition-speed) ease;
-                position: relative;
-                z-index: 1;
-                transform-style: preserve-3d;
-                backface-visibility: hidden;
-                will-change: transform;
-            }
-            
-            .sidebar:not(.collapsed) ~ .content {
-                transform: translateX(0);
-            }
-            
-            .sidebar:not(.collapsed) ~ .content .content-card {
-                transform: scale(0.98);
-                filter: brightness(0.95);
-            }
-            
-            .sidebar:not(.collapsed) ~ .content .content-card:hover {
-                transform: scale(1.02) !important;
-                filter: brightness(1.05);
-                z-index: 4 !important;
-            }
+            transition: margin-left var(--transition-speed) ease;
         }
 
         .sidebar.collapsed ~ .content {
             margin-left: var(--sidebar-collapsed-width);
-            transform: translateX(0);
         }
 
         .content-container {
-            width: 100%;
             max-width: 1200px;
+            margin: 0 auto;
         }
 
         .content-header {
@@ -406,7 +265,7 @@
 
         .filter-button {
             padding: 8px 16px;
-            background-color: var(--dark-surface);
+            background: var(--dark-surface);
             border: none;
             border-radius: 20px;
             color: var(--dark-text);
@@ -415,20 +274,20 @@
         }
 
         body.light-theme .filter-button {
-            background-color: var(--light-surface);
+            background: var(--light-surface);
             color: var(--light-text);
         }
 
         .filter-button:hover {
-            background-color: var(--dark-hover);
+            background: var(--dark-hover);
         }
 
         body.light-theme .filter-button:hover {
-            background-color: var(--light-hover);
+            background: var(--light-hover);
         }
 
         .filter-button.active {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
         }
 
@@ -439,15 +298,12 @@
             border-radius: 8px;
             overflow: hidden;
             position: relative;
-            touch-action: pan-y;
         }
 
         .slider {
             display: flex;
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             height: 160px;
-            width: 100%;
-            will-change: transform;
         }
 
         .slide {
@@ -477,24 +333,30 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color  موسيقى 0.3s ease;
         }
 
         .slider-dot.active {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
         }
 
         .content-grid {
-            width: 100%;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
 
+        .content-card {
+            background: var(--dark-surface);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
         body.light-theme .content-card {
-            background-color: var(--light-surface);
+            background: var(--light-surface);
         }
 
         .content-card:hover {
@@ -539,7 +401,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--dark-surface);
+            background: var(--dark-surface);
             height: 60px;
             z-index: 1000;
             box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
@@ -547,7 +409,7 @@
         }
 
         body.light-theme .bottom-nav {
-            background-color: var(--light-surface);
+            background: var(--light-surface);
             box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -579,11 +441,11 @@
         }
 
         .bottom-nav-item:hover {
-            background-color: var(--dark-hover);
+            background: var(--dark-hover);
         }
 
         body.light-theme .bottom-nav-item:hover {
-            background-color: var(--light-hover);
+            background: var(--light-hover);
         }
 
         .bottom-nav-item.active {
@@ -602,7 +464,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 850;
             opacity: 0;
             pointer-events: none;
@@ -614,7 +476,6 @@
             pointer-events: all;
         }
 
-        /* Contact content styles */
         .contact-content {
             display: none;
         }
@@ -638,7 +499,6 @@
                 z-index: 950;
                 overflow-y: auto;
                 scrollbar-width: none;
-                -ms-overflow-style: none;
             }
 
             .sidebar::-webkit-scrollbar {
@@ -676,16 +536,11 @@
                 padding-bottom: 8px;
             }
 
-            /* 修改为两列布局 */
             .content-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
-            
-            .content-card {
-                margin-bottom: 0;
-            }
-            
+
             .card-image {
                 height: 120px;
             }
@@ -700,29 +555,19 @@
             .card-image {
                 height: 100px;
             }
-            
+
             .card-title {
                 font-size: 14px;
             }
-            
+
             .card-meta {
                 font-size: 12px;
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @keyframes slideIn {
             from { transform: translateX(-20px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
-        }
-
-        .sidebar-item {
-            animation: slideIn 0.3s ease forwards;
-            opacity: 0;
         }
 
         .sidebar-item:nth-child(1) { animation-delay: 0.1s; }
@@ -747,14 +592,12 @@
             </div>
             <img src="hv" alt="Logo" class="logo">
         </div>
-        
         <div class="user-controls">
             <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/FmXo0ZgeSGcMnUbiaxJxZe4IbMO8uVpho2u4QYEWN3FibxkbrfWkEXFGNGmtyhouaCYsdY2jjrBibibXlQ1iaJgxKErfHF9vl6BxcHiaYBCiageneU/132" alt="User Avatar" class="user-avatar" id="userAvatar">
         </div>
     </header>
     
     <div class="sidebar" id="sidebar">
-        <!-- Original Content -->
         <div class="original-content">
             <div class="sidebar-section">
                 <div class="sidebar-item active">
@@ -811,7 +654,7 @@
                 <div class="sidebar-item theme-toggle-item" id="sidebarThemeToggle">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l-2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">设置</div>
@@ -827,11 +670,9 @@
             </div>
         </div>
 
-        <!-- Contact Content -->
         <div class="contact-content">
             <div class="sidebar-section">
                 <div class="sidebar-section-title">通讯</div>
-                <!-- 微信 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg t="1746266427548" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="47060" width="28" height="28">
@@ -841,7 +682,6 @@
                     </div>
                     <div class="sidebar-item-text">微信：yaliuz</div>
                 </div>
-                <!-- 邮箱 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -851,7 +691,6 @@
                     </div>
                     <div class="sidebar-item-text">邮箱：yaliuz@qq.com</div>
                 </div>
-                <!-- QQ -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -861,7 +700,6 @@
                     </div>
                     <div class="sidebar-item-text">QQ：42626139</div>
                 </div>
-                <!-- 二维码 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg t="1746266022476" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="39061" width="24" height="24">
@@ -873,7 +711,6 @@
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-title">其他</div>
-                <!-- 礼物 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -882,7 +719,6 @@
                     </div>
                     <div class="sidebar-item-text">礼物</div>
                 </div>
-                <!-- 传统电话 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -892,7 +728,6 @@
                     </div>
                     <div class="sidebar-item-text">电话：1321*******</div>
                 </div>
-                <!-- 登入后台 -->
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -921,15 +756,9 @@
         <div class="content-container">
             <div class="slider-container" id="sliderContainer">
                 <div class="slider" id="slider">
-                    <div class="slide">
-                        <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 1">
-                    </div>
-                    <div class="slide">
-                        <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 2">
-                    </div>
-                    <div class="slide">
-                        <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 3">
-                    </div>
+                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 1"></div>
+                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 2"></div>
+                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 3"></div>
                 </div>
                 <div class="slider-dots">
                     <div class="slider-dot active" data-index="0"></div>
@@ -948,7 +777,6 @@
                 </div>
             </div>
             <div class="content-grid">
-                <!-- Row 1 -->
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 1" class="card-image">
                     <div class="card-content">
@@ -989,7 +817,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Row 2 -->
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 5" class="card-image">
                     <div class="card-content">
@@ -1023,51 +850,50 @@
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 8" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">冬季动物迁徙纪录片</h3>
+                        <h3 class="card-title">冬季野生动物追踪</h3>
                         <div class="card-meta">
-                            <span>纪录片</span>
-                            <span>6.7万观看</span>
+                            <span>野生动物</span>
+                            <span>2.7万观看</span>
                         </div>
                     </div>
                 </div>
-                <!-- Row 3 -->
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 9" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">北极光下的驯鹿</h3>
+                        <h3 class="card-title">北极光摄影教程</h3>
                         <div class="card-meta">
-                            <span>自然奇观</span>
-                            <span>2.9万观看</span>
+                            <span>摄影教程</span>
+                            <span>6.2万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 10" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">野生动物救援故事</h3>
+                        <h3 class="card-title">驯鹿迁徙纪录片</h3>
                         <div class="card-meta">
-                            <span>公益组织</span>
-                            <span>3.4万观看</span>
+                            <span>纪录片</span>
+                            <span>3.9万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 11" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">极地探险装备推荐</h3>
+                        <h3 class="card-title">极地生存挑战</h3>
                         <div class="card-meta">
-                            <span>户外运动</span>
-                            <span>1.5万观看</span>
+                            <span>冒险</span>
+                            <span>5.3万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
                     <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 12" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">驯鹿与人类共生历史</h3>
+                        <h3 class="card-title">野生动物救援故事</h3>
                         <div class="card-meta">
-                            <span>历史文化</span>
-                            <span>2.6万观看</span>
+                            <span>动物救援</span>
+                            <span>4.8万观看</span>
                         </div>
                     </div>
                 </div>
@@ -1117,24 +943,15 @@
         const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
         const filterButtons = document.querySelectorAll('.filter-button');
         const menuItems = document.querySelectorAll('.sidebar-item');
-        const sliderContainer = document.getElementById('sliderContainer');
         const slider = document.getElementById('slider');
         const sliderDots = document.querySelectorAll('.slider-dot');
         const contentContainer = document.querySelector('.content-container');
+        const contentGrid = document.querySelector('.content-grid');
 
-        // Initialize theme and icons
-        const currentTheme = localStorage.getItem('theme') || 'dark';
         const themeIcons = {
             light: 'https://www.ysjf.com/assets/ysjf@2x-DcH_D2DE.png',
             dark: 'https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png'
         };
-
-        if (currentTheme === 'light') {
-            body.classList.add('light-theme');
-            themeToggle.querySelector('img').src = themeIcons.light;
-        } else {
-            themeToggle.querySelector('img').src = themeIcons.dark;
-        }
 
         let sidebarExpanded = true;
         let isMouseOverSidebar = false;
@@ -1145,19 +962,25 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
-        // Theme toggle function
+        // Initialize theme
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-theme');
+            themeToggle.querySelector('img').src = themeIcons.light;
+        } else {
+            themeToggle.querySelector('img').src = themeIcons.dark;
+        }
+
+        // Theme toggle
         function toggleTheme(element) {
             body.classList.toggle('light-theme');
             const theme = body.classList.contains('light-theme') ? 'light' : 'dark';
             localStorage.setItem('theme', theme);
             themeToggle.querySelector('img').src = themeIcons[theme];
             element.classList.add('rotate');
-            setTimeout(() => {
-                element.classList.remove('rotate');
-            }, 500);
+            setTimeout(() => element.classList.remove('rotate'), 500);
         }
 
-        // Contact view toggle function
+        // Contact view toggle
         function toggleContactView() {
             sidebar.classList.toggle('show-contact');
             if (sidebar.classList.contains('show-contact')) {
@@ -1168,30 +991,12 @@
 
         // Reset contact view
         function resetContactView() {
-            if (sidebar.classList.contains('show-contact')) {
-                sidebar.classList.remove('show-contact');
-            }
+            sidebar.classList.remove('show-contact');
         }
-
-        // Theme toggle handlers
-        themeToggle.addEventListener('click', () => toggleTheme(themeToggle));
-        sidebarThemeToggle.addEventListener('click', () => toggleTheme(themeToggle));
-
-        // Contact toggle handlers
-        contactToggle.addEventListener('click', toggleContactView);
-        backToMain.addEventListener('click', () => {
-            toggleContactView();
-            if (window.innerWidth > 768) {
-                sidebar.classList.add('collapsed');
-                sidebarExpanded = false;
-            }
-        });
-        userAvatar.addEventListener('click', toggleContactView);
 
         // Slider functions
         function initSlider() {
             if (window.innerWidth > 768) return;
-            
             slideInterval = setInterval(() => {
                 let nextSlide;
                 do {
@@ -1199,60 +1004,51 @@
                 } while (nextSlide === currentSlide);
                 goToSlide(nextSlide);
             }, 3000);
-            
+
             sliderDots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    goToSlide(parseInt(this.dataset.index));
+                dot.addEventListener('click', () => {
+                    goToSlide(parseInt(dot.dataset.index));
                     resetSlideInterval();
                 });
             });
-            
-            slider.addEventListener('touchstart', handleTouchStart, { passive: true });
-            slider.addEventListener('touchmove', handleTouchMove, { passive: false });
-            slider.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+            slider.addEventListener('touchstart', e => {
+                touchStartX = e.touches[0].clientX;
+                resetSlideInterval();
+                clearInterval(slideInterval);
+            }, { passive: true });
+
+            slider.addEventListener('touchmove', e => {
+                touchEndX = e.touches[0].clientX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 10) {
+                    e.preventDefault();
+                    slider.style.transition = 'none';
+                    slider.style.transform = `translateX(calc(-${currentSlide * 100}% - ${diff}px))`;
+                }
+            }, { passive: false });
+
+            slider.addEventListener('touchend', () => {
+                slider.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                const threshold = 50;
+                const diff = touchStartX - touchEndX;
+                if (diff > threshold) {
+                    goToSlide((currentSlide + 1) % 3);
+                } else if (diff < -threshold) {
+                    goToSlide((currentSlide - 1 + 3) % 3);
+                } else {
+                    goToSlide(currentSlide);
+                }
+                resetSlideInterval();
+            }, { passive: true });
         }
-        
-        function handleTouchStart(e) {
-            touchStartX = e.touches[0].clientX;
-            resetSlideInterval();
-            clearInterval(slideInterval);
-        }
-        
-        function handleTouchMove(e) {
-            touchEndX = e.touches[0].clientX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 10) {
-                e.preventDefault();
-                slider.style.transition = 'none';
-                slider.style.transform = `translateX(calc(-${currentSlide * 100}% - ${diff}px))`;
-            }
-        }
-        
-        function handleTouchEnd() {
-            slider.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            const threshold = 50;
-            const diff = touchStartX - touchEndX;
-            
-            if (diff > threshold) {
-                goToSlide((currentSlide + 1) % 3);
-            } else if (diff < -threshold) {
-                goToSlide((currentSlide - 1 + 3) % 3);
-            } else {
-                goToSlide(currentSlide);
-            }
-            
-            resetSlideInterval();
-        }
-        
+
         function goToSlide(index) {
             currentSlide = index;
             slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            sliderDots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentSlide);
-            });
+            sliderDots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
         }
-        
+
         function resetSlideInterval() {
             clearInterval(slideInterval);
             slideInterval = setInterval(() => {
@@ -1262,6 +1058,24 @@
                 } while (nextSlide === currentSlide);
                 goToSlide(nextSlide);
             }, 3000);
+        }
+
+        // Scroll to section for mobile
+        function scrollToSection(section) {
+            if (window.innerWidth > 768) return;
+            const cards = document.querySelectorAll('.content-card');
+            let scrollPosition = 0;
+            if (section === 'explore') {
+                scrollPosition = cards[4].offsetTop - 100; // Second row
+            } else if (section === 'subscriptions') {
+                scrollPosition = cards[8].offsetTop - 100; // Third row
+            }
+            window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+        }
+
+        // Check if scrolled to bottom
+        function isAtBottom() {
+            return window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
         }
 
         // Auto-collapse sidebar on desktop
@@ -1274,10 +1088,10 @@
                     }
                 }, 2000);
             }
-            
             initSlider();
         });
 
+        // Screen size handling
         function checkScreenSize() {
             if (window.innerWidth <= 768) {
                 sidebar.classList.remove('collapsed');
@@ -1309,7 +1123,21 @@
                 sidebar.classList.add('collapsed');
                 sidebarExpanded = false;
                 isMouseOverSidebar = false;
-                resetContactView(); // Reset to original sidebar when mouse leaves
+                resetContactView();
+            }
+        });
+
+        // Event listeners
+        themeToggle.addEventListener('click', () => toggleTheme(themeToggle));
+        sidebarThemeToggle.addEventListener('click', () => toggleTheme(themeToggle));
+        contactToggle.addEventListener('click', toggleContactView);
+        backToMain.addEventListener('click', toggleContactView);
+        userAvatar.addEventListener('click', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.toggle('collapsed');
+                sidebarExpanded = !sidebarExpanded;
+            } else {
+                toggleContactView();
             }
         });
 
@@ -1318,72 +1146,17 @@
             overlay.classList.remove('visible');
             isMenuOpen = false;
             resetContactView();
+            document.body.style.overflow = '';
         });
 
-        // Sidebar and bottom nav interactions
         menuItems.forEach(item => {
             item.addEventListener('click', function() {
-                if (!this.classList.contains('theme-toggle-item') && 
-                    !this.classList.contains('contact-toggle') &&
-                    !this.classList.contains('back-to-main')) {
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                }
-                if (window.innerWidth <= 768 && !this.classList.contains('theme-toggle-item') && 
-                    !this.classList.contains('contact-toggle') &&
-                    !this.classList.contains('back-to-main')) {
-                    sidebar.classList.remove('visible');
-                    overlay.classList.remove('visible');
-                    isMenuOpen = false;
-                    resetContactView();
-                }
-            });
-        });
-
-        // Mobile content scrolling logic
-        bottomNavItems.forEach(item => {
-            item.addEventListener('click', function() {
-                bottomNavItems.forEach(i => i.classList.remove('active'));
+                if (this.classList.contains('theme-toggle-item') || 
+                    this.classList.contains('contact-toggle') ||
+                    this.classList.contains('back-to-main')) return;
+                menuItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
-                
                 if (window.innerWidth <= 768) {
-                    // Scroll to specific sections on mobile
-                    if (this.dataset.section === 'home') {
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                    } else if (this.dataset.section === 'explore') {
-                        const secondRow = document.querySelector('.content-grid').children[4]; // First card of second row
-                        const offsetTop = secondRow.getBoundingClientRect().top + window.pageYOffset - 72; // Adjust for header
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
-                    } else if (this.dataset.section === 'subscriptions') {
-                        const thirdRow = document.querySelector('.content-grid').children[8]; // First card of third row
-                        const offsetTop = thirdRow.getBoundingClientRect().top + window.pageYOffset - 72; // Adjust for header
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-
-                if (this.dataset.section === 'menu') {
-                    isMenuOpen = !isMenuOpen;
-                    if (isMenuOpen) {
-                        sidebar.classList.add('visible');
-                        overlay.classList.add('visible');
-                        document.body.style.overflow = 'hidden';
-                    } else {
-                        sidebar.classList.remove('visible');
-                        overlay.classList.remove('visible');
-                        document.body.style.overflow = '';
-                        resetContactView();
-                    }
-                    bottomNav.classList.remove('hidden');
-                } else {
                     sidebar.classList.remove('visible');
                     overlay.classList.remove('visible');
                     isMenuOpen = false;
@@ -1393,37 +1166,52 @@
             });
         });
 
-        // Filter buttons
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
+        bottomNavItems.forEach(item => {
+            item.addEventListener('click', function() {
+                bottomNavItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
+                if (this.dataset.section === 'menu') {
+                    isMenuOpen = !isMenuOpen;
+                    sidebar.classList.toggle('visible', isMenuOpen);
+                    overlay.classList.toggle('visible', isMenuOpen);
+                    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+                    bottomNav.classList.remove('hidden');
+                } else {
+                    sidebar.classList.remove('visible');
+                    overlay.classList.remove('visible');
+                    isMenuOpen = false;
+                    document.body.style.overflow = '';
+                    resetContactView();
+                    scrollToSection(this.dataset.section);
+                }
+            });
+        });
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
             });
         });
 
         // Scroll logic for bottom nav
         window.addEventListener('scroll', () => {
             if (window.innerWidth > 768) return;
-            
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 50) {
+            if (isAtBottom()) {
+                bottomNav.classList.remove('hidden');
+            } else if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 50) {
                 bottomNav.classList.add('hidden');
             } else {
                 bottomNav.classList.remove('hidden');
             }
-            
             lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
         });
 
         // Prevent scrolling when sidebar is open on mobile
-        function preventDefault(e) {
-            if (isMenuOpen) {
-                e.preventDefault();
-            }
-        }
-
-        document.addEventListener('touchmove', preventDefault, { passive: false });
+        document.addEventListener('touchmove', e => {
+            if (isMenuOpen) e.preventDefault();
+        }, { passive: false });
     </script>
 </body>
 </html>
