@@ -97,8 +97,9 @@
         }
 
         .theme-toggle img {
-            width: 100%;
-            height: 100%;
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
             transition: transform 0.5s ease;
         }
 
@@ -335,7 +336,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition: background-color  موسيقى 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .slider-dot.active {
@@ -589,8 +590,7 @@
         <div class="logo-container">
             <div class="theme-toggle" id="themeToggle">
                 <img src="https://www.ysjf.com/assets/ysjf_active@2x-BTnDL7hV.png" alt="Theme toggle">
-            </div>
-            <img src="hv" alt="Logo" class="logo">
+            </div> 
         </div>
         <div class="user-controls">
             <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/FmXo0ZgeSGcMnUbiaxJxZe4IbMO8uVpho2u4QYEWN3FibxkbrfWkEXFGNGmtyhouaCYsdY2jjrBibibXlQ1iaJgxKErfHF9vl6BxcHiaYBCiageneU/132" alt="User Avatar" class="user-avatar" id="userAvatar">
@@ -654,7 +654,7 @@
                 <div class="sidebar-item theme-toggle-item" id="sidebarThemeToggle">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">设置</div>
@@ -1132,12 +1132,17 @@
         sidebarThemeToggle.addEventListener('click', () => toggleTheme(themeToggle));
         contactToggle.addEventListener('click', toggleContactView);
         backToMain.addEventListener('click', toggleContactView);
+        
+        // 修改后的userAvatar点击事件
         userAvatar.addEventListener('click', () => {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth <= 768) {
+                isMenuOpen = !isMenuOpen;
+                sidebar.classList.toggle('visible', isMenuOpen);
+                overlay.classList.toggle('visible', isMenuOpen);
+                document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+            } else {
                 sidebar.classList.toggle('collapsed');
                 sidebarExpanded = !sidebarExpanded;
-            } else {
-                toggleContactView();
             }
         });
 
@@ -1149,11 +1154,17 @@
             document.body.style.overflow = '';
         });
 
+        // 修改menuItems点击事件，排除联系方式项
         menuItems.forEach(item => {
             item.addEventListener('click', function() {
+                // 如果是联系方式项，不执行关闭操作
+                const isContactItem = this.closest('.contact-content');
+                if (isContactItem && !this.classList.contains('back-to-main')) return;
+                
                 if (this.classList.contains('theme-toggle-item') || 
                     this.classList.contains('contact-toggle') ||
                     this.classList.contains('back-to-main')) return;
+                    
                 menuItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
                 if (window.innerWidth <= 768) {
