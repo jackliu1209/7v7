@@ -634,7 +634,7 @@
                             <path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33c-.77-.32-1.2-.5-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86l-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path>
                         </svg>
                     </div>
-                    <div class="sidebar-item-text">Shorts</div>
+                    <div class="sidebar-item-text">My Like</div>
                 </div>
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
@@ -732,7 +732,7 @@
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-title">其他</div>
-                <div class="sidebar-item">
+                <div class="sidebar-item ys-jf-link">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
@@ -791,10 +791,10 @@
             <div class="content-header">
                 <h1 class="content-title">推荐内容</h1>
                 <div class="content-filters">
-                    <button class="filter-button active">全部</button>
-                    <button class="filter-button">最新</button>
-                    <button class="filter-button">热门</button>
-                    <button class="filter-button">收藏</button>
+                    <button class="filter-button active" data-slide="2">大春</button>
+                    <button class="filter-button" data-slide="0">夏洛</button>
+                    <button class="filter-button" data-slide="2">秋雅</button>
+                    <button class="filter-button" data-slide="1">冬梅</button>
                 </div>
             </div>
             <div class="content-grid">
@@ -968,6 +968,7 @@
         const sliderDots = document.querySelectorAll('.slider-dot');
         const contentContainer = document.querySelector('.content-container');
         const contentGrid = document.querySelector('.content-grid');
+        const ysJfLink = document.querySelector('.ys-jf-link');
 
         const themeIcons = {
             light: 'https://www.ysjf.com/assets/ysjf@2x-DcH_D2DE.png',
@@ -1234,7 +1235,20 @@
             button.addEventListener('click', () => {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
+                
+                // 在手机端点击按钮时控制幻灯片播放
+                if (window.innerWidth <= 768) {
+                    const slideIndex = parseInt(button.dataset.slide);
+                    goToSlide(slideIndex);
+                    resetSlideInterval();
+                }
             });
+        });
+
+        // 影视飓风链接点击事件
+        ysJfLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'https://www.ysjf.com/home';
         });
 
         // Scroll logic for bottom nav
