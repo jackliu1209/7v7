@@ -72,6 +72,15 @@
             height: 30px;
         }
 
+        /* 用户控制区域 */
+        .user-controls {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            position: relative;
+        }
+
+        /* 主题切换按钮 */
         .theme-toggle {
             padding: 8px;
             cursor: pointer;
@@ -82,14 +91,15 @@
             justify-content: center;
             width: 40px;
             height: 40px;
+            overflow: hidden;
         }
 
         .theme-toggle:hover {
-            background: var(--dark-hover);
+            background-color: var(--dark-hover);
         }
 
         body.light-theme .theme-toggle:hover {
-            background: var(--light-hover);
+            background-color: var(--light-hover);
         }
 
         .theme-toggle:active {
@@ -97,9 +107,9 @@
         }
 
         .theme-toggle img {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
 
@@ -107,11 +117,7 @@
             transform: rotate(360deg);
         }
 
-        .user-controls {
-            display: flex;
-            align-items: center;
-        }
-
+        /* 用户头像 */
         .user-avatar {
             width: 32px;
             height: 32px;
@@ -493,6 +499,20 @@
             display: block;
         }
 
+        /* 幽灵图标动画 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .ghost-icon {
+            animation: float 2s ease-in-out infinite;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -661,8 +681,9 @@
                 </div>
                 <div class="sidebar-item contact-toggle">
                     <div class="sidebar-item-icon">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">联系我</div>
@@ -675,9 +696,9 @@
                 <div class="sidebar-section-title">通讯</div>
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
-                        <svg t="1746266427548" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="47060" width="28" height="28">
-                            <path d="M884.9 385c-20.65-40.87-50.09-77.48-87.51-108.82C721.5 212.6 620.93 177.6 514.2 177.6s-207.3 35-283.2 98.54c-37.41 31.34-66.85 67.95-87.5 108.86-21.6 42.73-32.5 88.21-32.5 135.14 0 31.58 13.46 122.13 31.57 166.54L107.92 819.6a42.28 42.28 0 0 0 52.7 51.21l164.78-47.95c57.9 26.07 123 39.83 188.8 39.83 106.73 0 207.3-35 283.19-98.54 37.42-31.34 66.86-67.95 87.51-108.82 21.6-42.77 32.55-88.25 32.55-135.19S906.5 427.73 884.9 385zM514.2 802.69c-59.33 0-117.91-12.78-169.4-36.94a42.29 42.29 0 0 0-29.8-2.35l-141.14 41.06 28.27-108.59a42.39 42.39 0 0 0-2.6-28.5C184.77 635.69 171 547 171 520.14c0-155.79 154-282.54 343.25-282.54s343.2 126.75 343.2 282.54S703.47 802.69 514.2 802.69z" fill="#000000" p-id="47061"></path>
-                            <path d="M421.1 438.83a47.48 47.48 0 1 0 2.9 67.08 47.47 47.47 0 0 0-2.9-67.08zM666.1 438.83a47.48 47.48 0 1 0 2.9 67.08 47.47 47.47 0 0 0-2.9-67.08z" fill="#000000" p-id="47062"></path>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <path d="M22 6l-10 7L2 6"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">微信：yaliuz</div>
@@ -694,8 +715,8 @@
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 2L11 13"></path>
-                            <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <path d="M22 6l-10 7L2 6"></path>
                         </svg>
                     </div>
                     <div class="sidebar-item-text">QQ：42626139</div>
@@ -717,7 +738,7 @@
                             <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
                         </svg>
                     </div>
-                    <div class="sidebar-item-text">礼物</div>
+                    <div class="sidebar-item-text">@影视飓风</div>
                 </div>
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
@@ -730,7 +751,7 @@
                 </div>
                 <div class="sidebar-item">
                     <div class="sidebar-item-icon">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <svg class="ghost-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"></path>
                             <circle cx="9" cy="10" r="1" fill="currentColor"></circle>
                             <circle cx="15" cy="10" r="1" fill="currentColor"></circle>
@@ -756,9 +777,9 @@
         <div class="content-container">
             <div class="slider-container" id="sliderContainer">
                 <div class="slider" id="slider">
-                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 1"></div>
-                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 2"></div>
-                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Slide 3"></div>
+                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/5Elh4Ili.jpg" alt="Slide 3"></div>
+                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/sms23MG5.jpg" alt="Slide 2"></div>
+                    <div class="slide"><img src="https://public.ysjf.com/content/title-image/EIg7lgx6.jpg" alt="Slide 1"></div>
                 </div>
                 <div class="slider-dots">
                     <div class="slider-dot active" data-index="0"></div>
@@ -778,9 +799,9 @@
             </div>
             <div class="content-grid">
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 1" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/tD0iaOw6.jpg" alt="Image 1" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">驯鹿部落全景展示</h3>
+                        <h3 class="card-title">巨嘴鸟在树干上吃香蕉</h3>
                         <div class="card-meta">
                             <span>YSJF</span>
                             <span>1.2万观看</span>
@@ -788,9 +809,9 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 2" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/%E8%87%AA%E7%84%B6%E9%A3%8E%E6%99%AF-%E7%99%BD%E6%A1%A6%E6%9E%97-08-%E5%85%A8%E6%99%AF.jpg" alt="Image 2" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">野生动物摄影技巧分享</h3>
+                        <h3 class="card-title">白桦林</h3>
                         <div class="card-meta">
                             <span>自然摄影</span>
                             <span>8千观看</span>
@@ -798,19 +819,19 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 3" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/%E4%BA%BA%E6%96%87-%E7%91%B6%E5%B1%B1%E5%8F%A4%E5%AF%A81-%E5%85%A8%E6%99%AF.jpg" alt="Image 3" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">北方森林探险日记 - 第一季合集</h3>
+                        <h3 class="card-title">夏日午后</h3>
                         <div class="card-meta">
-                            <span>探险家</span>
+                            <span>风土人情</span>
                             <span>3.5万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 4" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/%E4%BA%BA%E6%96%87-%E8%82%87%E5%85%B4%E4%BE%97%E5%AF%A816-%E4%B8%AD%E6%99%AF.jpg" alt="Image 4" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">驯鹿文化与传统生活方式</h3>
+                        <h3 class="card-title">肇兴侗寨</h3>
                         <div class="card-meta">
                             <span>文化探索</span>
                             <span>1.8万观看</span>
@@ -818,9 +839,9 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 5" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/1Olprx9D.jpg" alt="Image 5" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">极地风光摄影大赛获奖作品展示</h3>
+                        <h3 class="card-title">螃蟹在进食（近景）</h3>
                         <div class="card-meta">
                             <span>摄影艺术</span>
                             <span>5.6万观看</span>
@@ -828,29 +849,29 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 6" class="card-image">
+                    <img src="https://public.ysjf.com/mediastorm/material/material/%E5%9F%8E%E5%B8%82%E4%BA%BA%E6%96%87_%E8%8E%8E%E8%BD%A6_2_%E8%BF%91%E6%99%AF.jpg" alt="Image 6" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">野生动物保护现状与未来</h3>
+                        <h3 class="card-title">晨粥</h3>
                         <div class="card-meta">
-                            <span>环保组织</span>
+                            <span>生活</span>
                             <span>2.3万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 7" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/UNW9IGojyb-.jpg" alt="Image 7" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">极地生态系统研究</h3>
+                        <h3 class="card-title">厦门街头小憩的柯基</h3>
                         <div class="card-meta">
-                            <span>科学研究</span>
+                            <span>动物</span>
                             <span>4.1万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 8" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/c41TAnfSnSA.jpg" alt="Image 8" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">冬季野生动物追踪</h3>
+                        <h3 class="card-title">天鹅湖</h3>
                         <div class="card-meta">
                             <span>野生动物</span>
                             <span>2.7万观看</span>
@@ -858,9 +879,9 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 9" class="card-image">
+                    <img src="https://public.ysjf.com/mediastorm/material/material/%E5%8A%A8%E7%89%A9_%E4%BA%AC%E9%83%BD_2_%E7%89%B9%E5%86%99.jpg" alt="Image 9" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">北极光摄影教程</h3>
+                        <h3 class="card-title">京都</h3>
                         <div class="card-meta">
                             <span>摄影教程</span>
                             <span>6.2万观看</span>
@@ -868,9 +889,9 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 10" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/%E4%BA%BA%E6%96%87-%E7%91%B6%E5%B1%B1%E5%8F%A4%E5%AF%A83-%E5%85%A8%E6%99%AF.jpg" alt="Image 10" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">驯鹿迁徙纪录片</h3>
+                        <h3 class="card-title">瑶山古寨</h3>
                         <div class="card-meta">
                             <span>纪录片</span>
                             <span>3.9万观看</span>
@@ -878,21 +899,21 @@
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 11" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/zfDeUnLW.jpg" alt="Image 11" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">极地生存挑战</h3>
+                        <h3 class="card-title">一只蝴蝶</h3>
                         <div class="card-meta">
-                            <span>冒险</span>
+                            <span>自然</span>
                             <span>5.3万观看</span>
                         </div>
                     </div>
                 </div>
                 <div class="content-card">
-                    <img src="https://public.ysjf.com/content/title-image/%E5%8A%A8%E7%89%A9-%E9%A9%AF%E9%B9%BF%E9%83%A8%E8%90%BD-05-%E5%85%A8%E6%99%AF.jpg" alt="Image 12" class="card-image">
+                    <img src="https://public.ysjf.com/content/title-image/UbJ0HBtl.jpg" alt="Image 12" class="card-image">
                     <div class="card-content">
-                        <h3 class="card-title">野生动物救援故事</h3>
+                        <h3 class="card-title">盛开的荷花（近景）</h3>
                         <div class="card-meta">
-                            <span>动物救援</span>
+                            <span>自然风景</span>
                             <span>4.8万观看</span>
                         </div>
                     </div>
