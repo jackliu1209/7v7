@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政府工作证</title>
+    <style>
+        body {
+            font-family: "SimSun", "宋体", serif;
+            background-color: #e6eef5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .government-card {
+            width: 400px;
+            height: 240px;
+            background: linear-gradient(to bottom, #1a56a7, #0d3b8a);
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        .emblem {
+            width: 120px;
+            height: 40px;
+            background-image: url(' ');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+        .department {
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        .card-body {
+            display: flex;
+            height: 130px;
+        }
+        .photo {
+            width: 100px;
+            height: 130px;
+            background-image: url('https://www.shanghai.gov.cn/assets2020/img/logo-big.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        .position {
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+        .contact {
+            font-size: 14px;
+            line-height: 1.6;
+            font-family: "FangSong", "仿宋", "SimSun", "宋体", serif;
+        }
+        .contact div {
+            display: flex;
+            align-items: center;
+        }
+        .contact div span.icon {
+            margin-right: 8px;
+            width: 14px;
+            height: 14px;
+            display: inline-flex; /* 修改为flex布局 */
+            align-items: center;  /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            vertical-align: middle; /* 与文字垂直对齐 */
+        }
+        .contact div span.icon svg {
+            width: 100%;
+            height: 100%;
+            fill: white;
+        }
+        .card-footer {
+            position: absolute;
+            bottom: 10px;
+            right: 25px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            color: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="government-card">
+        <div class="watermark">工作证</div>
+        
+        <div class="card-header">
+            <div class="emblem"></div>
+            <div class="department">
+                <span data-lang="zh">中国人民政府<br>国防部</span>
+                <span data-lang="jp" style="display:none">中華人民共和国<br>国防部已介入</span>
+                <span data-lang="en" style="display:none">People's Republic of China<br>Ministry of National Defense</span>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <div class="photo"></div>
+            <div class="info">
+                <div>
+                    <div class="name">
+                        <span data-lang="zh">提示</span>
+                        <span data-lang="jp" style="display:none">注意</span>
+                        <span data-lang="en" style="display:none">Notice</span>
+                    </div>
+                    <div class="position">
+                        <span data-lang="zh">此站点正在接受中国政府监管</span>
+                        <span data-lang="jp" style="display:none">このサイトは中国政府による監督を受けています</span>
+                        <span data-lang="en" style="display:none">This site is under the supervision of the Chinese government</span>
+                    </div>
+                </div>
+                <div class="contact">
+                    <div>
+                        <span class="icon">
+                            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.335 13.127a.322.322 0 00-.118.366l.217.814c.01.038.026.077.026.118a.161.161 0 01-.16.16.183.183 0 01-.094-.03l-1.054-.611a.486.486 0 00-.398-.053 5.675 5.675 0 01-1.573.221c-2.662 0-4.82-1.807-4.82-4.035 0-2.23 2.158-4.036 4.82-4.036 2.661 0 4.819 1.807 4.819 4.036 0 1.216-.649 2.31-1.665 3.05zM5.783 1.586c2.885 0 5.276 1.77 5.712 4.083a6.234 6.234 0 00-.314-.009c-2.913 0-5.274 1.978-5.274 4.417 0 .411.068.809.194 1.187a6.807 6.807 0 01-2.205-.258.577.577 0 00-.478.063l-1.266.735a.216.216 0 01-.111.036.193-.193 0 01-.193-.194c0-.048.019-.096.031-.142l.26-.976a.388.388 0 00-.141-.44C.778 9.202 0 7.889 0 6.429c0-2.674 2.589-4.842 5.783-4.842zM9.574 9.39c.333 0 .602-.27.602-.605a.603.603 0 00-.602-.604.603.603 0 00-.601.604c0 .334.269.605.601.605zm3.213 0c.333 0 .602-.27.602-.605a.603.603 0 00-.602-.604.603.603 0 00-.601.604c0 .334.27.605.601.605zM3.856 5.566a.685.685 0 00.683-.687.685.685 0 00-.683-.687.685.685 0 00-.684.687c0 .38.306.687.684.687zm3.855 0a.685.685 0 00.684-.687.685.685 0 00-.684-.687.685.685 0 00-.684.687c0 .38.306.687.684.687z"/>
+                            </svg>
+                        </span>
+                        <span data-lang="zh">微信：yaliuz</span>
+                        <span data-lang="jp" style="display:none">WeChat：yaliuz</span>
+                        <span data-lang="en" style="display:none">WeChat：yaliuz</span>
+                    </div>
+                    <div>
+                        <span class="icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3h9c1.93 0 3.5 1.57 3.5 3.5v11c0 1.93-1.57 3.5-3.5 3.5h-9c-1.93 0-3.5-1.57-3.5-3.5v-11C4 4.57 5.57 3 7.5 3m0-2C4.46 1 2 3.46 2 6.5v11C2 20.54 4.46 23 7.5 23h9c3.04 0 5.5-2.46 5.5-5.5v-11C22 3.46 19.54 1 16.5 1h-9z"/>
+                            </svg>
+                        </span>
+                        <span data-lang="zh">电话：13143344476</span>
+                        <span data-lang="jp" style="display:none">電話：13143344476</span>
+                        <span data-lang="en" style="display:none">Phone：13143344476</span>
+                    </div>
+                    <div>
+                        <span class="icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </span>
+                        <span data-lang="zh">邮箱：yaliuz@qq.com</span>
+                        <span data-lang="jp" style="display:none">メール：iyaliu@qq.com</span>
+                        <span data-lang="en" style="display:none">Email：iyaliu@qq.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-footer">
+            <span id="lang-zh" class="lang-btn active">简</span>
+            <span id="lang-jp" class="lang-btn">あ</span>
+            <span id="lang-en" class="lang-btn">EN</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有语言按钮和语言内容
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const langContents = document.querySelectorAll('[data-lang]');
+            
+            // 设置语言切换功能
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 获取当前点击的语言
+                    const lang = this.id.split('-')[1];
+                    
+                    // 移除所有按钮的活动状态
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // 添加当前按钮的活动状态
+                    this.classList.add('active');
+                    
+                    // 隐藏所有语言内容
+                    langContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // 显示当前语言的内容
+                    document.querySelectorAll(`[data-lang="${lang}"]`).forEach(content => {
+                        content.style.display = 'inline';
+                    });
+                    
+                    // 更新水印文字
+                    updateWatermark(lang);
+                });
+            });
+            
+            // 更新水印文字的函数
+            function updateWatermark(lang) {
+                const watermark = document.querySelector('.watermark');
+                switch(lang) {
+                    case 'zh':
+                        watermark.textContent = '工作证';
+                        break;
+                    case 'jp':
+                        watermark.textContent = '職員証';
+                        break;
+                    case 'en':
+                        watermark.textContent = 'STAFF ID';
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
