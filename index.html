@@ -412,14 +412,15 @@
             height: 60px;
             z-index: 1000;
             transition: transform 0.15s ease-out;
+            /* 毛玻璃效果 */
+            background: rgba(15, 15, 15, 0.85);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            background-color: rgba(15, 15, 15, 0.7);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         body.light-theme .bottom-nav {
-            background-color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
@@ -444,9 +445,9 @@
             cursor: pointer;
             padding: 8px;
             transition: all var(--transition-speed) ease;
-            background-color: transparent;
-            border-radius: 8px;
-            margin: 0 4px;
+            background: transparent;
+            border: none;
+            outline: none;
         }
 
         body.light-theme .bottom-nav-item {
@@ -454,11 +455,11 @@
         }
 
         .bottom-nav-item:hover {
-            background: rgba(48, 48, 48, 0.3);
+            background: rgba(48, 48, 48, 0.2);
         }
 
         body.light-theme .bottom-nav-item:hover {
-            background: rgba(229, 229, 229, 0.3);
+            background: rgba(229, 229, 229, 0.2);
         }
 
         .bottom-nav-item.active {
